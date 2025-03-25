@@ -1,4 +1,3 @@
-require('РУССКИЕметоды');//импортировать нерабочий фаил
 /*Роли крипов:
 🚜💰🌾🥕🍏🌱🪴🌿🍃💧🎍🍀🌳🏕🏞🐝🍯🐞🌻🪲
 🚛🚚
@@ -258,7 +257,8 @@ module.exports.loop = function () {
         '🏗️' + parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🏗️').length) + " " +
         '🔋' + parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🔋').length) + " " +
         '  ♻' + parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '♻️').length) + " " +
-        '🏴‍' + parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🏴‍').length) + " ",
+        '🏴‍' + parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🏴‍').length) + " " +
+        '🗡' + parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🗡').length) + " ",
         ИнформацияОКомнате.x,
         ИнформацияОКомнате.y,
         {
@@ -373,7 +373,7 @@ module.exports.loop = function () {
     }
 
     function переноснойМетодУдалиПотом() {
-        if (parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🚜').length) < 5) {
+         if (parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🚜').length) < 5) {
             СпавнКрипа("Spawn1", "Спейс марин", "🚜", [WORK, WORK, MOVE, CARRY]);
         }
         else if (parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '♻️').length) < 1) {
@@ -390,6 +390,9 @@ module.exports.loop = function () {
         }
         else if (parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🔋').length) < 2) {
             СпавнКрипа("Spawn1", "Спейс марин", "🔋", [WORK, WORK, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY]);
+        }
+        else if (parseInt(Object.values(Game.creeps).filter(creep => creep.memory.роль == '🗡').length) < 2) {
+             СпавнКрипа("Spawn1", "Спейс марин", "🗡", [TOUGH, MOVE, TOUGH, MOVE, TOUGH, MOVE, TOUGH, MOVE, TOUGH, MOVE, TOUGH, MOVE, TOUGH, MOVE, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE]);
         }
         //СпавнКрипа("Император", "Спейс марин2");
         //СпавнКрипа();
@@ -412,6 +415,9 @@ module.exports.loop = function () {
             }
             else if (крип.memory.роль == "♻️") {
                 сборщик1(крип);
+            }
+            else if (крип.memory.роль == "🗡") {
+                воин1(крип);
             }
         }
         //УДАЛИТЬ ВСЕХ МЁРТВЫХ КРИПОВ
@@ -438,7 +444,18 @@ module.exports.loop = function () {
 
 
 
-
+    /** @param {Creep} крип **/
+    function воин1(крип) {
+        const вражескийКрип = крип.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        if (вражескийКрип) {
+            if (крип.attack(вражескийКрип) == ERR_NOT_IN_RANGE) {
+                крип.moveTo(вражескийКрип);
+            }
+        }
+        else {
+            крип.moveTo(30,23);
+        }
+    }
 
     /** @param {Creep} крип **/
     function сборщик1(крип) {
